@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Code from one minute games. 
+/// </summary>
 public class CarController : MonoBehaviour
 {
     [Header("Components")]
@@ -54,7 +57,6 @@ public class CarController : MonoBehaviour
         moveForce = Vector3.ClampMagnitude(moveForce, maxSpeed);
         //Moves position of car by vector moveForce
         rb.position += moveForce * Time.deltaTime;
-
     }
 
     private void HandleSteering()
