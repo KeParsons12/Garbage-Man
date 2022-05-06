@@ -73,8 +73,14 @@ public class RealisticCarController : MonoBehaviour
             //Input Reverse (negative)
             if (inputVertical < 0)
             {
+                Debug.Log("Trying to stop");
                 //break with all wheels
-                wheel.collider.brakeTorque = inputVertical * breakForce * _multiplier * Time.deltaTime;
+                wheel.collider.brakeTorque = -inputVertical * breakForce * _multiplier * Time.deltaTime;
+            }
+
+            if(inputVertical == 0)
+            {
+                wheel.collider.brakeTorque = 0;
             }
         }
     }
