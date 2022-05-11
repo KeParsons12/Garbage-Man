@@ -35,11 +35,14 @@ public class ArcadeCarController : MonoBehaviour
     public float groundRayLength = 0.5f;
     public bool isGrounded;
 
+    [Header("Particles")]
+    public GameObject[] exhaustParticles;
+
     [Header("UI")]
     public float speed;
     public Text speedText;
-    public float rpm;
-    public Text rpmText;
+    //public float rpm;
+    //public Text rpmText;
 
     [Header("Inputs")]
     private float speedInput;
@@ -49,6 +52,9 @@ public class ArcadeCarController : MonoBehaviour
     {
         //Seperate the sphere and the car model
         rb.transform.parent = null;
+
+        //find the ui
+        speedText = GameObject.Find("MPH Text").GetComponent<Text>();
     }
 
     private void Update()
@@ -58,6 +64,9 @@ public class ArcadeCarController : MonoBehaviour
 
         //Player Inputs
         HandleInputs();
+
+        //Exhaust
+        HandleExhaustParticle();
 
         if (IsGround())
         {
@@ -158,6 +167,11 @@ public class ArcadeCarController : MonoBehaviour
         }
 
         return isGrounded;
+    }
+
+    private void HandleExhaustParticle()
+    {
+        
     }
 
     private void PrintUI()
