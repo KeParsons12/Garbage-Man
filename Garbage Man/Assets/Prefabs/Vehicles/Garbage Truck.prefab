@@ -1482,7 +1482,7 @@ MonoBehaviour:
   forwardAccelSpeed: 40
   reverseAccelSpeed: 20
   maxSpeed: 50
-  turnStrength: 160
+  turnStrength: 110
   gravityForce: 50
   dragOnGround: 1
   dragOffGround: 0.1
