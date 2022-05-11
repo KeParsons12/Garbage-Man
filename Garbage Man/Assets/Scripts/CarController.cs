@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Code from one minute games. 
@@ -18,9 +19,10 @@ public class CarController : MonoBehaviour
     public float drag = 0.98f;
     public float traction = 1f;
 
-    [Header("States")]
+    [Header("Wheels")]
     public bool isGrounded;
-    public CapsuleCollider[] wheels;
+    public int wheelsOnGround;
+    public List<WheelCollider> allWheels;
 
     [Header("Debug")]
     public bool isDebug;
@@ -38,7 +40,7 @@ public class CarController : MonoBehaviour
     private void FixedUpdate()
     {
         //If we are not on the ground
-        if(isGrounded)
+        if(IsGround())
         {
             HandleMove();
             HandleSteering();
@@ -46,7 +48,6 @@ public class CarController : MonoBehaviour
 
         CalculateDrag();
         CalculateTraction();
-        HandleGround();
     }
 
     private void HandleMove()
@@ -56,7 +57,8 @@ public class CarController : MonoBehaviour
         //MaxSpeed
         moveForce = Vector3.ClampMagnitude(moveForce, maxSpeed);
         //Moves position of car by vector moveForce
-        rb.position += moveForce * Time.deltaTime;
+        //rb.position += moveForce * Time.deltaTime;
+        rb.AddForce(moveForce);
     }
 
     private void HandleSteering()
@@ -84,11 +86,25 @@ public class CarController : MonoBehaviour
         moveForce = Vector3.Lerp(moveForce.normalized, transform.forward, traction * Time.deltaTime) * moveForce.magnitude;
     }
 
-    private void HandleGround()
+    private bool IsGround()
     {
-        for (int i = 0; i < wheels.Length; i++)
+        wheelsOnGround = 0;
+        foreach (WheelCollider wheel in allWheels)
         {
-
+            if (wheel.isGrounded)
+            {
+                wheelsOnGround++;
+            }
+        }
+        if (wheelsOnGround == 4)
+        {
+            isGrounded = true;
+            return isGrounded;
+        }
+        else
+        {
+            isGrounded = false;
+            return isGrounded;
         }
     }
 

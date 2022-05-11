@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// A sphere is actually driving the car. The car is just a model
@@ -14,6 +15,7 @@ public class ArcadeCarController : MonoBehaviour
     public Transform rightFrontWheel;
     public Transform leftFrontWheel;
     public float maxWheelTurn = 25f;
+    public Vector3 difference;
 
     [Header("Car Stats")]
     public float accelSpeed;
@@ -33,6 +35,12 @@ public class ArcadeCarController : MonoBehaviour
     public float groundRayLength = 0.5f;
     public bool isGrounded;
 
+    [Header("UI")]
+    public float speed;
+    public Text speedText;
+    public float rpm;
+    public Text rpmText;
+
     [Header("Inputs")]
     private float speedInput;
     private float turnInput;
@@ -45,6 +53,9 @@ public class ArcadeCarController : MonoBehaviour
 
     private void Update()
     {
+        //UI
+        PrintUI();
+
         //Player Inputs
         HandleInputs();
 
@@ -55,7 +66,7 @@ public class ArcadeCarController : MonoBehaviour
         }
 
         //Makes the model follow the sphere
-        transform.position = rb.transform.position;
+        transform.position = rb.transform.position + difference;
     }
 
     private void FixedUpdate()
@@ -79,7 +90,7 @@ public class ArcadeCarController : MonoBehaviour
         {
             //Adds a force in the forward vector of the car model * accelSpeed
             var moveForce = transform.forward * accelSpeed;
-            moveForce = Vector3.ClampMagnitude(moveForce, maxSpeed * 10000f);
+            //moveForce = Vector3.ClampMagnitude(moveForce, maxSpeed * 1000f);
             rb.AddForce(moveForce);
         }
     }
@@ -88,7 +99,7 @@ public class ArcadeCarController : MonoBehaviour
     {
         //Rotates the car model
         //TODO Remove the speedInput and calculate if the car is moving inorder to turn
-        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, speedInput * turnInput * turnStrength * Time.deltaTime, 0f));
+        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, turnInput * turnStrength * Time.deltaTime, 0f));
        
         rightFrontWheel.localRotation = Quaternion.Euler(rightFrontWheel.localRotation.eulerAngles.x, turnInput * maxWheelTurn, rightFrontWheel.localRotation.eulerAngles.z);
         leftFrontWheel.localRotation = Quaternion.Euler(leftFrontWheel.localRotation.eulerAngles.x, turnInput * maxWheelTurn, leftFrontWheel.localRotation.eulerAngles.z);
@@ -101,12 +112,12 @@ public class ArcadeCarController : MonoBehaviour
         //Input Forward
         if (speedInput > 0)
         {
-            accelSpeed = speedInput * forwardAccelSpeed * 1000f;
+            accelSpeed = speedInput * forwardAccelSpeed * 100f;
         }
         //Input Reverse
         else if(speedInput < 0)
         {
-            accelSpeed = speedInput * reverseAccelSpeed * 1000f;
+            accelSpeed = speedInput * reverseAccelSpeed * 100f;
         }
         else
         {
@@ -147,5 +158,14 @@ public class ArcadeCarController : MonoBehaviour
         }
 
         return isGrounded;
+    }
+
+    private void PrintUI()
+    {
+        speed = Mathf.Round(rb.velocity.magnitude * 2.237f);
+        speedText.text = "Speed: " + Mathf.RoundToInt(speed) + "mph";
+
+        //rpm = Mathf.Round((speed % 30) * 40);
+        //rpmText.text = "RPM: " + rpm;
     }
 }
