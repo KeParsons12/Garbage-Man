@@ -1438,7 +1438,7 @@ GameObject:
   - component: {fileID: 3120188098150583099}
   m_Layer: 8
   m_Name: Garbage Truck
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1481,7 +1481,6 @@ MonoBehaviour:
   accelSpeed: 0
   forwardAccelSpeed: 40
   reverseAccelSpeed: 20
-  maxSpeed: 50
   turnStrength: 110
   gravityForce: 50
   dragOnGround: 1
@@ -1493,8 +1492,6 @@ MonoBehaviour:
   groundRayLength: 1.5
   isGrounded: 0
   exhaustParticles: []
-  speed: 0
-  speedText: {fileID: 0}
 --- !u!1 &3120188098216058779
 GameObject:
   m_ObjectHideFlags: 0
