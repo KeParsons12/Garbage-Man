@@ -52,7 +52,7 @@ public class TrashPickUp : MonoBehaviour
 
                 //Add points
                 scoreValue = pickUpItem.GetComponent<PickUpItem>().pointValue;
-                gm.UpdateScore(scoreValue);
+                gm.UpdateScore(scoreValue, 1);
 
                 //Destroy objects
                 Destroy(pickUpItem.gameObject);

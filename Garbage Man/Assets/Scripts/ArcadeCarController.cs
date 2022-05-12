@@ -95,7 +95,8 @@ public class ArcadeCarController : MonoBehaviour
     {
         //Rotates the car model
         //TODO Remove the speedInput and calculate if the car is moving inorder to turn
-        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, turnInput * turnStrength * Time.deltaTime, 0f));
+        var speed = Mathf.Clamp01(rb.velocity.magnitude);
+        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, speed * turnInput * turnStrength * Time.deltaTime, 0f));
        
         rightFrontWheel.localRotation = Quaternion.Euler(rightFrontWheel.localRotation.eulerAngles.x, turnInput * maxWheelTurn, rightFrontWheel.localRotation.eulerAngles.z);
         leftFrontWheel.localRotation = Quaternion.Euler(leftFrontWheel.localRotation.eulerAngles.x, turnInput * maxWheelTurn, leftFrontWheel.localRotation.eulerAngles.z);

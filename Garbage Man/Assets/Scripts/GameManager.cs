@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     public Text scoreText;
     public int score;
 
+    public Text trashText;
+    public int trashCollected;
+
     [Header("Debug")]
     public bool isDebug;
     public GameObject debugPanel;
@@ -39,10 +42,13 @@ public class GameManager : MonoBehaviour
         DebugDisplay();
     }
 
-    public void UpdateScore(int value)
+    public void UpdateScore(int _score, int _trash)
     {
-        score += value;
+        score += _score;
         scoreText.text = "Score: " + score;
+
+        trashCollected += _trash;
+        trashText.text = "Trash Collected: " + trashCollected; 
     }
 
     public void DebugDisplay()
@@ -60,7 +66,7 @@ public class GameManager : MonoBehaviour
     {
         SetCarPos();
 
-        UpdateScore(0);
+        UpdateScore(0, 0);
 
         //Sets game over to false
         isGameOver = false;
