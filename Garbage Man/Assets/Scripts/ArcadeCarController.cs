@@ -21,7 +21,6 @@ public class ArcadeCarController : MonoBehaviour
     public float accelSpeed;
     public float forwardAccelSpeed = 10f;
     public float reverseAccelSpeed = 5f;
-    public float maxSpeed = 50f;
     public float turnStrength = 180f;
 
     [Header("Forces On Car")]
@@ -38,12 +37,6 @@ public class ArcadeCarController : MonoBehaviour
     [Header("Particles")]
     public GameObject[] exhaustParticles;
 
-    [Header("UI")]
-    public float speed;
-    public Text speedText;
-    //public float rpm;
-    //public Text rpmText;
-
     [Header("Inputs")]
     private float speedInput;
     private float turnInput;
@@ -52,16 +45,10 @@ public class ArcadeCarController : MonoBehaviour
     {
         //Seperate the sphere and the car model
         rb.transform.parent = null;
-
-        //find the ui
-        speedText = GameObject.Find("MPH Text").GetComponent<Text>();
     }
 
     private void Update()
     {
-        //UI
-        PrintUI();
-
         //Player Inputs
         HandleInputs();
 
@@ -172,14 +159,5 @@ public class ArcadeCarController : MonoBehaviour
     private void HandleExhaustParticle()
     {
         
-    }
-
-    private void PrintUI()
-    {
-        speed = Mathf.Round(rb.velocity.magnitude * 2.237f);
-        speedText.text = "Speed: " + Mathf.RoundToInt(speed) + "mph";
-
-        //rpm = Mathf.Round((speed % 30) * 40);
-        //rpmText.text = "RPM: " + rpm;
     }
 }

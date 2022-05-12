@@ -8,9 +8,9 @@ public class Timer : MonoBehaviour
 {
     public Text timerText;
     public float startMinutes = 3f;
+    public float currentTime = 0f;
 
     private bool isTimerActive = false;
-    private float currentTime = 0f;
 
     private void Start()
     {
