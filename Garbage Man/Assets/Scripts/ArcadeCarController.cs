@@ -22,6 +22,7 @@ public class ArcadeCarController : MonoBehaviour
     public float forwardAccelSpeed = 10f;
     public float reverseAccelSpeed = 5f;
     public float turnStrength = 180f;
+    private Vector3 moveForce;
 
     [Header("Forces On Car")]
     public float gravityForce = 10f;
@@ -34,8 +35,9 @@ public class ArcadeCarController : MonoBehaviour
     public float groundRayLength = 0.5f;
     public bool isGrounded;
 
-    [Header("Particles")]
-    public GameObject[] exhaustParticles;
+    [Header("VFX Effects")]
+    public ParticleSystem[] exhaustParticles;
+    public TrailRenderer[] skidMarks;
 
     [Header("Inputs")]
     private float speedInput;
@@ -51,9 +53,6 @@ public class ArcadeCarController : MonoBehaviour
     {
         //Player Inputs
         HandleInputs();
-
-        //Exhaust
-        HandleExhaustParticle();
 
         if (IsGround())
         {
@@ -85,7 +84,7 @@ public class ArcadeCarController : MonoBehaviour
         if(Mathf.Abs(accelSpeed) > 0)
         {
             //Adds a force in the forward vector of the car model * accelSpeed
-            var moveForce = transform.forward * accelSpeed;
+            moveForce = transform.forward * accelSpeed;
             //moveForce = Vector3.ClampMagnitude(moveForce, maxSpeed * 1000f);
             rb.AddForce(moveForce);
         }
@@ -108,19 +107,37 @@ public class ArcadeCarController : MonoBehaviour
         if (speedInput > 0)
         {
             accelSpeed = speedInput * forwardAccelSpeed * 100f;
+            //Exhaust
+            HandleExhaustParticle(false);
         }
         //Input Reverse
         else if(speedInput < 0)
         {
             accelSpeed = speedInput * reverseAccelSpeed * 100f;
+            HandleSkidMarks(false);
+            //Exhaust
+            HandleExhaustParticle(false);
         }
         else
         {
             accelSpeed = 0;
+            //Exhaust
+            HandleExhaustParticle(true);
         }
 
         //Steering Car Right / Left
         turnInput = Input.GetAxis("Horizontal");
+
+        //Car is turning
+        if(Mathf.Abs(turnInput) > 0)
+        {
+            HandleSkidMarks(true);
+        }
+        else
+        {
+            HandleSkidMarks(false);
+        }
+
     }
 
     public void ApplyGravity()
@@ -155,8 +172,19 @@ public class ArcadeCarController : MonoBehaviour
         return isGrounded;
     }
 
-    private void HandleExhaustParticle()
+    private void HandleExhaustParticle(bool isStopped)
     {
-        
+        foreach(ParticleSystem exhaust in exhaustParticles)
+        {
+            exhaust.enableEmission = isStopped;
+        }
+    }
+
+    private void HandleSkidMarks(bool isSkid)
+    {
+        foreach(TrailRenderer skids in skidMarks)
+        {
+            skids.emitting = isSkid;
+        }
     }
 }
