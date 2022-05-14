@@ -22,8 +22,27 @@ public class GameManager : MonoBehaviour
     public Text scoreText;
     public int score;
 
+    [Header("Trash")]
     public Text trashText;
     public int trashCollected;
+
+    [Header("Distance")]
+    public Text distanceText;
+    public float totalDistance;
+    public Transform targetPos;
+    private Vector3 oldPos;
+
+    [Header("Speeds")]
+    public Speedometer speedometer;
+    public Text aveSpeedText;
+    public float finalTotal;
+    private float averageTotal;
+    private bool hasSet;
+    public List<float> speedsList = new List<float>();
+
+    [Header("MailBoxes")]
+    public Text mailSmashedText;
+    public int mailSmashed;
 
     [Header("Debug")]
     public bool isDebug;
@@ -32,28 +51,86 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         StartGame();
+
+        UpdateMailSmashed(0);
+
+        oldPos = targetPos.position;
     }
 
     private void Update()
     {
         CheckGame();
 
+        UpdateDistance();
+
         //Debug
         DebugDisplay();
+
+    }
+
+    private void FixedUpdate()
+    {
+        AddSpeedToList();
     }
 
     public void UpdateScore(int _score, int _trash)
     {
+        //Score
         score += _score;
         scoreText.text = "Score: " + score;
 
+        //Trash Bins collected
         trashCollected += _trash;
-        trashText.text = "Trash Collected: " + trashCollected; 
+        trashText.text = "Trash Collected: " + trashCollected;
     }
 
-    public void DebugDisplay()
+    public void UpdateDistance()
     {
-        debugPanel.SetActive(isDebug);
+        //Total Distance Travelled
+        Vector3 distanceVector = targetPos.position - oldPos;
+        float distanceThisFrame = distanceVector.magnitude;
+        totalDistance += distanceThisFrame * 0.000621371f;
+        float roundedDistance = (int)(totalDistance * 100f) / 100f;
+
+        distanceText.text = "Distance: " + roundedDistance + " miles";
+
+        oldPos = targetPos.position;
+    }
+
+    public void AddSpeedToList()
+    {
+        if(!isGameOver)
+        {
+            speedsList.Add(speedometer.currentSpeed);
+        }
+    }
+
+    public void SetFinalSpeed()
+    {
+        if(!hasSet)
+        {
+            float roundedAvgSpeed = Mathf.Round(ReturnAverageSpeed());
+
+            aveSpeedText.text = "average speed: " + roundedAvgSpeed;
+            hasSet = true;
+        }
+    }
+
+    public float ReturnAverageSpeed()
+    {
+        for (int i = 0; i < speedsList.Count; i++)
+        {
+            averageTotal += speedsList[i];
+        }
+
+        finalTotal = averageTotal / speedsList.Count;
+        return finalTotal;
+    }
+
+    public void UpdateMailSmashed(int _smashed)
+    {
+        mailSmashed += _smashed;
+        mailSmashedText.text = "Mail boxes smashed: " + mailSmashed;
     }
 
     public void SetCarPos()
@@ -90,17 +167,27 @@ public class GameManager : MonoBehaviour
 
     public void MainMenu(string sceneName)
     {
+        Time.timeScale = 1f;
+
         SceneManager.LoadScene(sceneName);
     }
 
     public void CheckGame()
     {
         //If timer is zero
-        if(timer.currentTime <= 0)
+        if(timer.currentTime <= 0 && !isGameOver)
         {
             timer.currentTime = 0f;
+
+            SetFinalSpeed();
+
             isGameOver = true;
             EndGame(0f, isGameOver);
         }
+    }
+
+    public void DebugDisplay()
+    {
+        debugPanel.SetActive(isDebug);
     }
 }
