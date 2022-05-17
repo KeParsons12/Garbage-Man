@@ -31,13 +31,19 @@ public class ArcadeCarController : MonoBehaviour
 
     [Header("Ground Stats")]
     public LayerMask layerGround;
-    public Transform groundRayPoint;
+    public Transform[] groundRayPoint;
+    public float snapToGroundLevel = 0.1f;
     public float groundRayLength = 0.5f;
     public bool isGrounded;
+    private Vector3 normalAccumulator;
 
-    [Header("VFX Effects")]
+    [Header("VFXs")]
     public ParticleSystem[] exhaustParticles;
     public TrailRenderer[] skidMarks;
+
+    [Header("SFXs")]
+    public AudioSource startSound;
+    public AudioSource runningSound;
 
     [Header("Inputs")]
     private float speedInput;
@@ -87,6 +93,9 @@ public class ArcadeCarController : MonoBehaviour
             moveForce = transform.forward * accelSpeed;
             //moveForce = Vector3.ClampMagnitude(moveForce, maxSpeed * 1000f);
             rb.AddForce(moveForce);
+
+            //Audio
+            runningSound.pitch = Mathf.Clamp01(accelSpeed);
         }
     }
 
@@ -148,26 +157,33 @@ public class ArcadeCarController : MonoBehaviour
 
     public bool IsGround()
     {
-        //Just for debug
-        Debug.DrawRay(groundRayPoint.position, -groundRayPoint.up, Color.blue);
-        RaycastHit hit;
-        if(Physics.Raycast(groundRayPoint.position, -groundRayPoint.up, out hit, groundRayLength, layerGround))
+        for (int i = 0; i < groundRayPoint.Length; i++)
         {
-            //If ray hits ground then we are on the ground
-            isGrounded = true;
-            //Sets the drag to be ground drag
-            rb.drag = dragOnGround;
-            //Rotates car to the rotation of the ground
-            //TODO Change this to be four points
-            transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+            //Draws Rays
+            Debug.DrawRay(groundRayPoint[i].position, -groundRayPoint[i].up, Color.blue);
+
+            RaycastHit hit;
+            if (Physics.Raycast(groundRayPoint[i].position, -groundRayPoint[i].up, out hit, groundRayLength, layerGround))
+            {
+                //If ray hits ground then we are on the ground
+                isGrounded = true;
+                //Sets the drag to be ground drag
+                rb.drag = dragOnGround;
+                //Rotates car to the rotation of the ground
+                //TODO Change this to be four points
+                normalAccumulator = Vector3.Lerp(normalAccumulator, hit.normal, snapToGroundLevel);
+                transform.rotation = Quaternion.LookRotation(Vector3.Cross(transform.right, normalAccumulator));
+            }
+            else
+            {
+                //ray hit non ground
+                isGrounded = false;
+                //Set the drag to be off ground drag
+                rb.drag = dragOffGround;
+            }
         }
-        else
-        {
-            //ray hit non ground
-            isGrounded = false;
-            //Set the drag to be off ground drag
-            rb.drag = dragOffGround;
-        }
+
+        
 
         return isGrounded;
     }
