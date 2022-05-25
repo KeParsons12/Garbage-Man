@@ -42,8 +42,9 @@ public class ArcadeCarController : MonoBehaviour
     public TrailRenderer[] skidMarks;
 
     [Header("SFXs")]
-    public AudioSource startSound;
+    //public AudioSource startSound;
     public AudioSource runningSound;
+    public float minPitch, maxPitch;
 
     [Header("Inputs")]
     private float speedInput;
@@ -93,9 +94,6 @@ public class ArcadeCarController : MonoBehaviour
             moveForce = transform.forward * accelSpeed;
             //moveForce = Vector3.ClampMagnitude(moveForce, maxSpeed * 1000f);
             rb.AddForce(moveForce);
-
-            //Audio
-            runningSound.pitch = Mathf.Clamp01(accelSpeed);
         }
     }
 
@@ -202,5 +200,10 @@ public class ArcadeCarController : MonoBehaviour
         {
             skids.emitting = isSkid;
         }
+    }
+
+    private void HandleSounds()
+    {
+        runningSound.Play();
     }
 }

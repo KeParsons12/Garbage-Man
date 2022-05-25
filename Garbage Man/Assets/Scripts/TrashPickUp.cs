@@ -25,6 +25,9 @@ public class TrashPickUp : MonoBehaviour
     public int scoreValue;
     public Collider pickUpItem;
 
+    [Header("SFX")]
+    public AudioSource armSound;
+
     private void Start()
     {
         //find gamemanager
@@ -57,6 +60,9 @@ public class TrashPickUp : MonoBehaviour
                 //Destroy objects
                 Destroy(pickUpItem.gameObject);
 
+                //Sounds
+                HandleSound(isPickUp);
+
                 //wait until pick up is done
                 Invoke("ResetPickUp", pickUpTime);
                 Invoke("ThrowTrash", pickUpTime - 1f);
@@ -69,6 +75,8 @@ public class TrashPickUp : MonoBehaviour
         isPickUp = false;
         canPickUp = false;
         pickUpItem = null;
+
+        HandleSound(isPickUp);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -96,5 +104,18 @@ public class TrashPickUp : MonoBehaviour
     public void HandleAnimation()
     {
         anim.SetBool("isPickingUp", isPickUp);
+    }
+
+    public void HandleSound(bool isPlay)
+    { 
+        if(isPlay)
+        {
+            armSound.Play();
+        }
+        else
+        {
+            armSound.Stop();
+        }
+
     }
 }
