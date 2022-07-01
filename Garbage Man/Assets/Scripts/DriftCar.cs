@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DriftCar : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Rigidbody _rb;
+    private PlayerActions inputActions;
 
     [Header("Car Stats")]
     [SerializeField] [Tooltip("Center of mass for the object")] private Vector3 _centerOfMass;
@@ -21,17 +23,21 @@ public class DriftCar : MonoBehaviour
 
 
     private Vector3 _moveForce;
-    private float _verticalInput;
-    private float _horizontalInput;
 
-    private void Start()
+    private void Awake()
     {
+        //Set rigidbody
+        _rb = GetComponent<Rigidbody>();
+
+        //Set player inputs
+        inputActions = new PlayerActions();
+
+        //Set center of mass
         _rb.centerOfMass = _centerOfMass;
     }
 
     private void Update()
     {
-        GetInputs();
         HandleGround(_groundRayPoint);
         HandleSteering();
     }
@@ -41,17 +47,13 @@ public class DriftCar : MonoBehaviour
         HandleMove();
     }
 
-    private void GetInputs()
+    public void HandleMove()
     {
-        _verticalInput = Input.GetAxis("Vertical");
-        _horizontalInput = Input.GetAxis("Horizontal");
-    }
+        float verticalInput = inputActions.CarControls.Move.ReadValue<float>();
 
-    private void HandleMove()
-    {
         if(_isGrounded)
         {
-            _moveForce = _rb.transform.forward * _moveSpeed * _verticalInput;
+            _moveForce = _rb.transform.forward * _moveSpeed * verticalInput;
             _rb.AddForce(_moveForce, ForceMode.Acceleration);
         }
 
@@ -61,10 +63,9 @@ public class DriftCar : MonoBehaviour
 
     private void HandleSteering()
     {
-        //Old
-        //rb.transform.Rotate(rb.transform.up * _horizontalInput * _steeringAngle * Time.deltaTime);
+        float horizontalInput = inputActions.CarControls.Rotate.ReadValue<float>();
 
-        Quaternion rot = Quaternion.Euler(transform.up * _horizontalInput * _steeringAngle * Time.deltaTime);
+        Quaternion rot = Quaternion.Euler(transform.up * horizontalInput * _steeringAngle * Time.deltaTime);
         _rb.MoveRotation(rot * _rb.rotation);
     }
 
@@ -81,6 +82,16 @@ public class DriftCar : MonoBehaviour
         {
             _isGrounded = false;
         }
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Disable();
     }
 
     private void OnDrawGizmos()

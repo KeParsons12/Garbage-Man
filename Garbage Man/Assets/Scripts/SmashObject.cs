@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(Rigidbody)]
 public class SmashObject : MonoBehaviour
 {
     [Header("References")]
