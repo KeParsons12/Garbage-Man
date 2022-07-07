@@ -44,6 +44,24 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""5184f061-eeda-4fd5-805b-ececf3e8666d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Power Slide"",
+                    ""type"": ""Button"",
+                    ""id"": ""a3e68813-dee1-42b5-bc4d-4b06c40d9a54"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -178,6 +196,50 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7de4842f-2021-4154-8242-8b5ba284c9be"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""603a3e06-0f63-4a4c-b424-abfa2ed87ca2"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""515e7c20-ded0-4ed9-9175-a2364c005f9b"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Power Slide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5f94f612-a31c-4426-9d33-43a588915d67"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Power Slide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -211,6 +273,8 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         m_CarControls = asset.FindActionMap("CarControls", throwIfNotFound: true);
         m_CarControls_Move = m_CarControls.FindAction("Move", throwIfNotFound: true);
         m_CarControls_Rotate = m_CarControls.FindAction("Rotate", throwIfNotFound: true);
+        m_CarControls_Interact = m_CarControls.FindAction("Interact", throwIfNotFound: true);
+        m_CarControls_PowerSlide = m_CarControls.FindAction("Power Slide", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -272,12 +336,16 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     private ICarControlsActions m_CarControlsActionsCallbackInterface;
     private readonly InputAction m_CarControls_Move;
     private readonly InputAction m_CarControls_Rotate;
+    private readonly InputAction m_CarControls_Interact;
+    private readonly InputAction m_CarControls_PowerSlide;
     public struct CarControlsActions
     {
         private @PlayerActions m_Wrapper;
         public CarControlsActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_CarControls_Move;
         public InputAction @Rotate => m_Wrapper.m_CarControls_Rotate;
+        public InputAction @Interact => m_Wrapper.m_CarControls_Interact;
+        public InputAction @PowerSlide => m_Wrapper.m_CarControls_PowerSlide;
         public InputActionMap Get() { return m_Wrapper.m_CarControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -293,6 +361,12 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Rotate.started -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnRotate;
                 @Rotate.performed -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnRotate;
                 @Rotate.canceled -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnRotate;
+                @Interact.started -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnInteract;
+                @PowerSlide.started -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnPowerSlide;
+                @PowerSlide.performed -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnPowerSlide;
+                @PowerSlide.canceled -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnPowerSlide;
             }
             m_Wrapper.m_CarControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -303,6 +377,12 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Rotate.started += instance.OnRotate;
                 @Rotate.performed += instance.OnRotate;
                 @Rotate.canceled += instance.OnRotate;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
+                @PowerSlide.started += instance.OnPowerSlide;
+                @PowerSlide.performed += instance.OnPowerSlide;
+                @PowerSlide.canceled += instance.OnPowerSlide;
             }
         }
     }
@@ -329,5 +409,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+        void OnPowerSlide(InputAction.CallbackContext context);
     }
 }
