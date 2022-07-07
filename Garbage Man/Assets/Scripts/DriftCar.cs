@@ -59,7 +59,7 @@ public class DriftCar : MonoBehaviour
     public void HandleMove()
     {
         float verticalInput = _inputActions.CarControls.Move.ReadValue<float>();
-        Vector3 moveForce = _rb.transform.forward * _moveSpeed * verticalInput;
+        Vector3 moveForce = _rb.transform.forward * _moveSpeed * verticalInput * Time.deltaTime;
 
         if(_isGrounded)
         {

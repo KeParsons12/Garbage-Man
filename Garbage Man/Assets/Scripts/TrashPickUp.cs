@@ -54,7 +54,20 @@ public class TrashPickUp : MonoBehaviour
     {
         if(_colObject == null) { return; }
 
+        //set the pick up object
         _pickUpObject = _colObject.gameObject;
+
+        PickupStats pickupStats = _pickUpObject.GetComponent<PickupStats>();
+
+        //The pickup object has already been collected
+        if(pickupStats.HasTrash)
+        {
+            //Add points for picking up object
+            ScoreManager.instance.AddPoint(pickupStats.PointValue);
+
+            //Empty Trash
+            pickupStats.HasTrash = false;
+        }
     }
 
     private void ThrowObject()
@@ -63,14 +76,20 @@ public class TrashPickUp : MonoBehaviour
         Vector3 dir = _pickUpObject.transform.position - transform.position;
         Vector3 force = new Vector3(dir.x,dir.y * _heightOffset, dir.z);
 
+        //get rigidbody
+        Rigidbody rb = _pickUpObject.GetComponent<Rigidbody>();
+
         //Throw the object
-        _pickUpObject.GetComponent<Rigidbody>().AddForce(force * _throwForce, ForceMode.Impulse);
+        rb.AddForce(force * _throwForce, ForceMode.Impulse);
 
         //random rotation
         
 
         //Use gravity 
-        _pickUpObject.GetComponent<Rigidbody>().useGravity = true;
+        rb.useGravity = true;
+
+        //unfreeze rotation
+        rb.constraints = RigidbodyConstraints.None;
 
         //Reset pick up object
         _pickUpObject = null;
