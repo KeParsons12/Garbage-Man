@@ -38,10 +38,4 @@ public class SmashObject : MonoBehaviour
             _rb.AddForceAtPosition(_forceMultiplier * _forceToApply * _dir, _pos);
         }
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawRay(transform.position, _dir * 3f);
-        Gizmos.DrawSphere(_pos, 0.1f);
-    }
 }
