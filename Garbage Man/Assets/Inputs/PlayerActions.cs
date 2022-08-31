@@ -24,29 +24,29 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     ""name"": ""PlayerActions"",
     ""maps"": [
         {
-            ""name"": ""CarControls"",
+            ""name"": ""PlayerControls"",
             ""id"": ""b9c0ae7f-f249-41eb-abfb-e4cf7b3cd858"",
             ""actions"": [
                 {
                     ""name"": ""Move"",
                     ""type"": ""Value"",
-                    ""id"": ""7b4ffd85-5d59-4580-9ed0-24bef13dc861"",
-                    ""expectedControlType"": ""Axis"",
+                    ""id"": ""ee14aded-0606-48ac-8857-741e6e30f153"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Rotate"",
+                    ""name"": ""Sprint"",
                     ""type"": ""Value"",
-                    ""id"": ""bb85f34d-f055-4661-a9de-5dced071420f"",
+                    ""id"": ""bbe46f6c-8686-4f70-84ec-9e3bc75715bb"",
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Interact"",
+                    ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""5184f061-eeda-4fd5-805b-ececf3e8666d"",
                     ""expectedControlType"": ""Button"",
@@ -55,9 +55,36 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Power Slide"",
+                    ""name"": ""RotateCamera"",
+                    ""type"": ""Value"",
+                    ""id"": ""683d027b-a368-4d25-b685-48c52c3a4679"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Push"",
                     ""type"": ""Button"",
-                    ""id"": ""a3e68813-dee1-42b5-bc4d-4b06c40d9a54"",
+                    ""id"": ""f1511692-222c-4983-8461-c6e451f47afa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pickup"",
+                    ""type"": ""Button"",
+                    ""id"": ""f0650cb3-dfaf-40d7-9c71-a97b5a3c698d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""806f2066-a28d-410f-b2b4-24aa334de7a0"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -66,145 +93,13 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""WS"",
-                    ""id"": ""826ffea4-c9ff-4daf-b6a0-6a3ffaf38b11"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""ab937e58-c1e6-486e-81a4-b19002952e3d"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""d931f0ec-2be3-40e1-a4f3-8165630043e0"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""RT LT"",
-                    ""id"": ""e2902bd3-a218-43dd-ac5c-5f7cde2c41b4"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": ""AxisDeadzone"",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""bfb1a6b1-4e75-4cf8-a4d1-86137ef34917"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""1a8584ed-7da8-456a-8182-19b52e8e9a8f"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""AD"",
-                    ""id"": ""d94fa698-a866-4b00-8138-a6193e0bc0d6"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Rotate"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""257d51fa-8eba-405d-a51a-404684670b26"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Rotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""8244a2cc-8829-44c6-893f-52256e122f72"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Rotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Left Stick"",
-                    ""id"": ""958f8852-93b9-436f-b376-2a5aea1229ad"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": ""AxisDeadzone"",
-                    ""groups"": """",
-                    ""action"": ""Rotate"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""63f45700-e684-494b-90fe-93136be80742"",
-                    ""path"": ""<Gamepad>/leftStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Rotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""4bdfb3c9-b7f5-4a78-b083-3ca7fddbb409"",
-                    ""path"": ""<Gamepad>/leftStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Rotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""7de4842f-2021-4154-8242-8b5ba284c9be"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Interact"",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -215,29 +110,183 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Interact"",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""515e7c20-ded0-4ed9-9175-a2364c005f9b"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""name"": ""WASD"",
+                    ""id"": ""6be10ccc-8a1c-4134-8a0a-245fcc85ecc5"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""edc4a1df-f490-4733-b494-62a214c979e3"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Power Slide"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""36efe23f-09e5-4aca-a5a8-bec6ebcbf0d4"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""ef2c727d-11c5-4c93-8f00-8441d0b0ca2c"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""177a663a-96fa-4408-8c42-9c5d59227ace"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cccfc4d2-13ea-4863-a2a2-060f2d3658f3"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""5f94f612-a31c-4426-9d33-43a588915d67"",
+                    ""id"": ""5a5705c9-d6e7-4e75-85d5-7517362b580b"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""RotateCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""35b1b06f-a015-496e-983c-1b708b93256b"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": ""ScaleVector2(x=5,y=5)"",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RotateCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cf593c2a-79df-4bb4-a515-97d79320e26c"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Push"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d38ac8d5-5d84-40b5-a6ef-2de13f747040"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Power Slide"",
+                    ""action"": ""Push"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32fb9b36-74ce-4238-8f0d-127d6382256a"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Pickup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fc4e9466-4298-4517-b8d6-1edc3e7d7d03"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Pickup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cad3501e-61f9-455e-8751-847590361135"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9f95c170-ba36-42f9-9e26-065d334514c4"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7256f6f9-30cb-405e-8ec8-80a70dd02072"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd3f5bda-4708-415e-9119-1c36b13223b7"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -269,12 +318,15 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // CarControls
-        m_CarControls = asset.FindActionMap("CarControls", throwIfNotFound: true);
-        m_CarControls_Move = m_CarControls.FindAction("Move", throwIfNotFound: true);
-        m_CarControls_Rotate = m_CarControls.FindAction("Rotate", throwIfNotFound: true);
-        m_CarControls_Interact = m_CarControls.FindAction("Interact", throwIfNotFound: true);
-        m_CarControls_PowerSlide = m_CarControls.FindAction("Power Slide", throwIfNotFound: true);
+        // PlayerControls
+        m_PlayerControls = asset.FindActionMap("PlayerControls", throwIfNotFound: true);
+        m_PlayerControls_Move = m_PlayerControls.FindAction("Move", throwIfNotFound: true);
+        m_PlayerControls_Sprint = m_PlayerControls.FindAction("Sprint", throwIfNotFound: true);
+        m_PlayerControls_Jump = m_PlayerControls.FindAction("Jump", throwIfNotFound: true);
+        m_PlayerControls_RotateCamera = m_PlayerControls.FindAction("RotateCamera", throwIfNotFound: true);
+        m_PlayerControls_Push = m_PlayerControls.FindAction("Push", throwIfNotFound: true);
+        m_PlayerControls_Pickup = m_PlayerControls.FindAction("Pickup", throwIfNotFound: true);
+        m_PlayerControls_Pause = m_PlayerControls.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -331,62 +383,86 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // CarControls
-    private readonly InputActionMap m_CarControls;
-    private ICarControlsActions m_CarControlsActionsCallbackInterface;
-    private readonly InputAction m_CarControls_Move;
-    private readonly InputAction m_CarControls_Rotate;
-    private readonly InputAction m_CarControls_Interact;
-    private readonly InputAction m_CarControls_PowerSlide;
-    public struct CarControlsActions
+    // PlayerControls
+    private readonly InputActionMap m_PlayerControls;
+    private IPlayerControlsActions m_PlayerControlsActionsCallbackInterface;
+    private readonly InputAction m_PlayerControls_Move;
+    private readonly InputAction m_PlayerControls_Sprint;
+    private readonly InputAction m_PlayerControls_Jump;
+    private readonly InputAction m_PlayerControls_RotateCamera;
+    private readonly InputAction m_PlayerControls_Push;
+    private readonly InputAction m_PlayerControls_Pickup;
+    private readonly InputAction m_PlayerControls_Pause;
+    public struct PlayerControlsActions
     {
         private @PlayerActions m_Wrapper;
-        public CarControlsActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_CarControls_Move;
-        public InputAction @Rotate => m_Wrapper.m_CarControls_Rotate;
-        public InputAction @Interact => m_Wrapper.m_CarControls_Interact;
-        public InputAction @PowerSlide => m_Wrapper.m_CarControls_PowerSlide;
-        public InputActionMap Get() { return m_Wrapper.m_CarControls; }
+        public PlayerControlsActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_PlayerControls_Move;
+        public InputAction @Sprint => m_Wrapper.m_PlayerControls_Sprint;
+        public InputAction @Jump => m_Wrapper.m_PlayerControls_Jump;
+        public InputAction @RotateCamera => m_Wrapper.m_PlayerControls_RotateCamera;
+        public InputAction @Push => m_Wrapper.m_PlayerControls_Push;
+        public InputAction @Pickup => m_Wrapper.m_PlayerControls_Pickup;
+        public InputAction @Pause => m_Wrapper.m_PlayerControls_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(CarControlsActions set) { return set.Get(); }
-        public void SetCallbacks(ICarControlsActions instance)
+        public static implicit operator InputActionMap(PlayerControlsActions set) { return set.Get(); }
+        public void SetCallbacks(IPlayerControlsActions instance)
         {
-            if (m_Wrapper.m_CarControlsActionsCallbackInterface != null)
+            if (m_Wrapper.m_PlayerControlsActionsCallbackInterface != null)
             {
-                @Move.started -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnMove;
-                @Rotate.started -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnRotate;
-                @Rotate.performed -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnRotate;
-                @Rotate.canceled -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnRotate;
-                @Interact.started -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnInteract;
-                @Interact.performed -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnInteract;
-                @Interact.canceled -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnInteract;
-                @PowerSlide.started -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnPowerSlide;
-                @PowerSlide.performed -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnPowerSlide;
-                @PowerSlide.canceled -= m_Wrapper.m_CarControlsActionsCallbackInterface.OnPowerSlide;
+                @Move.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnMove;
+                @Sprint.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnSprint;
+                @Sprint.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnSprint;
+                @Sprint.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnSprint;
+                @Jump.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnJump;
+                @RotateCamera.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnRotateCamera;
+                @RotateCamera.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnRotateCamera;
+                @RotateCamera.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnRotateCamera;
+                @Push.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPush;
+                @Push.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPush;
+                @Push.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPush;
+                @Pickup.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPickup;
+                @Pickup.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPickup;
+                @Pickup.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPickup;
+                @Pause.started -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PlayerControlsActionsCallbackInterface.OnPause;
             }
-            m_Wrapper.m_CarControlsActionsCallbackInterface = instance;
+            m_Wrapper.m_PlayerControlsActionsCallbackInterface = instance;
             if (instance != null)
             {
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @Rotate.started += instance.OnRotate;
-                @Rotate.performed += instance.OnRotate;
-                @Rotate.canceled += instance.OnRotate;
-                @Interact.started += instance.OnInteract;
-                @Interact.performed += instance.OnInteract;
-                @Interact.canceled += instance.OnInteract;
-                @PowerSlide.started += instance.OnPowerSlide;
-                @PowerSlide.performed += instance.OnPowerSlide;
-                @PowerSlide.canceled += instance.OnPowerSlide;
+                @Sprint.started += instance.OnSprint;
+                @Sprint.performed += instance.OnSprint;
+                @Sprint.canceled += instance.OnSprint;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
+                @RotateCamera.started += instance.OnRotateCamera;
+                @RotateCamera.performed += instance.OnRotateCamera;
+                @RotateCamera.canceled += instance.OnRotateCamera;
+                @Push.started += instance.OnPush;
+                @Push.performed += instance.OnPush;
+                @Push.canceled += instance.OnPush;
+                @Pickup.started += instance.OnPickup;
+                @Pickup.performed += instance.OnPickup;
+                @Pickup.canceled += instance.OnPickup;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
-    public CarControlsActions @CarControls => new CarControlsActions(this);
+    public PlayerControlsActions @PlayerControls => new PlayerControlsActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -405,11 +481,14 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_GamepadSchemeIndex];
         }
     }
-    public interface ICarControlsActions
+    public interface IPlayerControlsActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnRotate(InputAction.CallbackContext context);
-        void OnInteract(InputAction.CallbackContext context);
-        void OnPowerSlide(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnRotateCamera(InputAction.CallbackContext context);
+        void OnPush(InputAction.CallbackContext context);
+        void OnPickup(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

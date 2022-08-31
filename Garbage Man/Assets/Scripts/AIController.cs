@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,17 +11,26 @@ public class AIController : MonoBehaviour
     [Header("Stats")]
     [SerializeField] [Tooltip("How fast the AI moves.")] private float _moveSpeed;
     [SerializeField] [Tooltip("How fast the AI moves.")] private float _maxMoveSpeed;
-    [SerializeField] [Tooltip("This is how close the AI needs to get to the goal marker to reach it.")] private float distanceToGoal;
+    [SerializeField] [Tooltip("This is how close the AI needs to get to the goal marker to reach it.")] private float _distanceToGoal;
+    private int _randomLocation;
     [Tooltip("The location the AI will try to move towards")] private Vector3 _currentGoalPos;
+    [SerializeField] private float _wakeUpTime;
+
+    [SerializeField] private bool _goalReached;
+    [SerializeField] private bool _hasPickedNewGoal;
+
+    [Header("Ground")]
+    [SerializeField] private float _rayDist;
+    [SerializeField] private LayerMask _groundLayer;
+
+    //public
+    public bool _isBeingHeld;
+    public bool _isUp;
 
     private void Awake()
     {
         //Get components
         _agent = GetComponent<NavMeshAgent>();
-
-        //Set AI Waypoints
-        //_goalLocations = GameObject.FindGameObjectsWithTag("Waypoint");
-        //_goalLocations = _waypointHolder.GetComponentsInChildren<Transform>();
 
         //Sets the size of the array
         _goalLocations = new Transform[_waypointHolder.transform.childCount];
@@ -34,64 +41,96 @@ public class AIController : MonoBehaviour
             _goalLocations[i] = _waypointHolder.transform.GetChild(i).GetComponent<Transform>();
         }
 
-        //Set speed
+        //Set speed to default move speed
         _agent.speed = _moveSpeed;
 
         //Set random goal pos
-        _currentGoalPos = _goalLocations[Random.Range(0, _goalLocations.Length)].position;
+        //_randomLocation = Random.Range(0, _goalLocations.Length);
+        //_currentGoalPos = _goalLocations[_randomLocation].position;
+        PickNewRandomGoal();
+
+        //Is being held false
+        _isBeingHeld = false;
     }
 
     private void Update()
     {
-        MoveToGoal();
-        ReachedGoal();
-    }
-
-    private void ReachedGoal()
-    {
-        //If AI is within certain distance then stop moving
-        if(_agent.remainingDistance < distanceToGoal)
+        if(_agent.enabled)
         {
-            //Stop AI
-            _agent.isStopped = true;
+            GoalReached();
+        }
 
-            //Pick a new goal after sometime
-            Invoke("PickNewGoal", Random.Range(0.25f, 5f));
+        if(_isBeingHeld || !_isUp)
+        {
+            _agent.enabled = false;
+        }
+
+        if (!_goalReached)
+        {
+            _hasPickedNewGoal = false;
+        }
+
+        //Agent is disabled
+        if (!_agent.enabled && !_isBeingHeld && IsGrounded())
+        {
+            Invoke("GetUp", _wakeUpTime);
         }
     }
 
-    private void PickNewGoal()
+    private void GoalReached()
     {
-        //Choose new goal
-        _currentGoalPos = _goalLocations[Random.Range(0, _goalLocations.Length)].position;
+        if(_distanceToGoal >= _agent.remainingDistance)
+        {
+            _goalReached = true;
 
-        //Temp REMOVE LATER
-        _agent.speed = Random.Range(_moveSpeed, _maxMoveSpeed);
-
-        //Reset isStopped
-        _agent.isStopped = false;
-        
+            PickNewRandomGoal();
+        }
+        else
+        {
+            _goalReached = false;
+        }
     }
 
-    private void MoveToGoal()
+    private void PickNewRandomGoal()
     {
-        //Move to the chosen goal
-        if(!_agent.isStopped)
+        if(!_hasPickedNewGoal)
         {
-            //move towards goal
+            _randomLocation = Random.Range(0, _goalLocations.Length);
+
+            _currentGoalPos = _goalLocations[_randomLocation].position;
+
             _agent.SetDestination(_currentGoalPos);
+
+            _hasPickedNewGoal = true;
         }
     }
 
-    private void StopMoving()
+    public void CancelGetUp()
     {
-        //Keep goal just stop moving towards it
-        _agent.isStopped = true;
+        CancelInvoke("GetUp");
+
+        _isUp = false;
     }
 
-    private void FleeFromObject()
+    private void GetUp()
     {
-        //Flee from object/area pick new goal
+        if (!_isUp)
+        {
+            _agent.enabled = true;
+
+            _isUp = true;
+        }
     }
 
+    private bool IsGrounded()
+    {
+        if(Physics.Raycast(transform.position, Vector3.down, _rayDist, _groundLayer))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

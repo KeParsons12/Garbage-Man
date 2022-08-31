@@ -23,19 +23,20 @@ public class SmashObject : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag(_colTag))
-        {
-            //Gets the direction
-            _dir = transform.position - collision.transform.position;
+        if (collision.gameObject.GetComponent<Rigidbody>() == null)
+            return;
 
-            //Gets the position of the contact point
-            _pos = collision.GetContact(0).point;
+        //Gets the direction
+        _dir = transform.position - collision.transform.position;
 
-            //Calculates how much force should be applied
-            _forceToApply = collision.gameObject.GetComponent<Rigidbody>().velocity.magnitude;
+        //Gets the position of the contact point
+        _pos = collision.GetContact(0).point;
 
-            //Adds a force in the direction and position of the contact
-            _rb.AddForceAtPosition(_forceMultiplier * _forceToApply * _dir, _pos);
-        }
+        //Calculates how much force should be applied
+        _forceToApply = collision.gameObject.GetComponent<Rigidbody>().velocity.magnitude;
+
+        //Adds a force in the direction and position of the contact
+        _rb.AddForceAtPosition(_forceMultiplier * _forceToApply * _dir, _pos);
+
     }
 }

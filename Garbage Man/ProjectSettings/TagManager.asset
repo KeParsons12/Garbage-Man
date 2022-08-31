@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Trash
   - Waypoint
+  - Moving Platform
   layers:
   - Default
   - TransparentFX
@@ -13,11 +14,11 @@ TagManager:
   - 
   - Water
   - UI
-  - Ground
+  - WhatIsGround
   - Player
-  - AI
-  - 
-  - 
+  - WhatIsNPC
+  - WhatIsObstacle
+  - WhatIsMoveable
   - 
   - 
   - 

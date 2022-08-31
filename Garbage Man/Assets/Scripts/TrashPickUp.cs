@@ -30,7 +30,7 @@ public class TrashPickUp : MonoBehaviour
     private void TryPickUpTrash()
     {
         //Read the button value
-        _interactInput = _inputActions.CarControls.Interact.WasPressedThisFrame();
+        _interactInput = _inputActions.PlayerControls.Jump.WasPressedThisFrame();
 
         if(_interactInput)
         {
